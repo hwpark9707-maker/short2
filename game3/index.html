@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>원카드 — One Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <section id="start-screen" class="screen active">
+      <div class="start-bg" aria-hidden="true"></div>
+      <div class="start-content">
+        <p class="brand">ONE CARD</p>
+        <h1 class="title">원카드</h1>
+        <p class="tagline">빨강·파랑·노랑·초록. 공격하고, 방패로 막고, 손을 비워라.</p>
+        <button type="button" id="btn-start" class="btn-primary">게임 시작</button>
+        <button type="button" id="btn-rules" class="btn-ghost">규칙 보기</button>
+      </div>
+    </section>
+
+    <div id="rules-modal" class="modal hidden" role="dialog" aria-labelledby="rules-title">
+      <div class="modal-panel rules-panel">
+        <h2 id="rules-title">원카드 규칙</h2>
+        <ul class="rules-list">
+          <li>같은 <strong>색</strong> 또는 같은 <strong>숫자</strong>면 낼 수 있습니다. (1~10)</li>
+          <li><strong>↺ 리버스</strong> — 진행 방향 반전 (색별 1장)</li>
+          <li><strong>↠ 점프</strong> — 다음 사람 건너뛰기 (색별 1장)</li>
+          <li><strong>✦ 체인지</strong> — 원하는 색으로 변경, 언제든 가능 (4장)</li>
+          <li><strong>🛡 방패</strong> — 공격을 무효화하고 턴 종료. 이후엔 아무 카드나 가능 (1장)</li>
+          <li><strong>+1 / +2 / +3</strong> — 공격. 방어 못하면 <strong>누적된 장수만큼</strong> 받음. 같거나 더 큰 공격/방패로 방어</li>
+          <li>버린 패는 덱이 부족해지면 <strong>다시 섞어</strong> 사용합니다</li>
+          <li>턴당 <strong>20초</strong> — 시간 초과 시 카드 1장 받고 턴 종료</li>
+          <li>1장 남으면 <em>원카드!</em> 버튼을 <strong>5초</strong> 안에 누르세요. 실패 시 +2장</li>
+          <li>손패를 <strong>먼저 모두 낸 사람이 1등</strong>이며 즉시 종료. 나머지는 남은 카드가 적은 순으로 2~4등</li>
+        </ul>
+        <button type="button" id="btn-close-rules" class="btn-primary">확인</button>
+      </div>
+    </div>
+
+    <section id="game-screen" class="screen">
+      <header class="hud">
+        <div class="hud-brand">원카드</div>
+        <div class="hud-meta">
+          <span id="direction-indicator" class="dir" title="진행 방향">↻</span>
+          <span id="attack-badge" class="attack-badge hidden">공격 +0</span>
+          <button type="button" id="btn-restart" class="btn-tiny">다시</button>
+        </div>
+      </header>
+
+      <div class="table">
+        <div class="felt" aria-hidden="true"></div>
+
+        <div id="turn-spotlight" class="turn-spotlight" aria-live="polite">
+          <span class="turn-spotlight-label">현재 차례</span>
+          <span id="turn-name" class="turn-spotlight-name">나</span>
+        </div>
+
+        <div class="seat seat-top" data-player="2">
+          <div class="turn-ring" aria-hidden="true"></div>
+          <div class="seat-header">
+            <div class="timer-bar hidden" id="timer-2" aria-hidden="true">
+              <div class="timer-bar-fill"></div>
+            </div>
+            <div class="seat-info">
+              <span class="seat-turn-tag">차례</span>
+              <span class="seat-name" id="name-2">민수</span>
+              <span class="seat-count" id="count-2">7</span>
+            </div>
+          </div>
+          <div class="hand-ai" id="hand-2"></div>
+          <div class="seat-status" id="status-2"></div>
+        </div>
+
+        <div class="seat seat-left" data-player="1">
+          <div class="turn-ring" aria-hidden="true"></div>
+          <div class="seat-header">
+            <div class="timer-bar hidden" id="timer-1" aria-hidden="true">
+              <div class="timer-bar-fill"></div>
+            </div>
+            <div class="seat-info">
+              <span class="seat-turn-tag">차례</span>
+              <span class="seat-name" id="name-1">지우</span>
+              <span class="seat-count" id="count-1">7</span>
+            </div>
+          </div>
+          <div class="hand-ai" id="hand-1"></div>
+          <div class="seat-status" id="status-1"></div>
+        </div>
+
+        <div class="seat seat-right" data-player="3">
+          <div class="turn-ring" aria-hidden="true"></div>
+          <div class="seat-header">
+            <div class="timer-bar hidden" id="timer-3" aria-hidden="true">
+              <div class="timer-bar-fill"></div>
+            </div>
+            <div class="seat-info">
+              <span class="seat-turn-tag">차례</span>
+              <span class="seat-name" id="name-3">하은</span>
+              <span class="seat-count" id="count-3">7</span>
+            </div>
+          </div>
+          <div class="hand-ai" id="hand-3"></div>
+          <div class="seat-status" id="status-3"></div>
+        </div>
+
+        <div class="center">
+          <div class="pile draw-pile" id="draw-pile" title="카드 뽑기">
+            <div class="card-back stacked"></div>
+            <span class="pile-label" id="deck-count">65</span>
+          </div>
+          <div class="pile discard-pile" id="discard-pile"></div>
+          <div id="color-indicator" class="color-indicator hidden"></div>
+        </div>
+
+        <div id="toast" class="toast hidden"></div>
+
+        <div class="seat seat-bottom" data-player="0">
+          <div class="turn-ring" aria-hidden="true"></div>
+          <div class="seat-header">
+            <div class="timer-bar hidden" id="timer-0" aria-hidden="true">
+              <div class="timer-bar-fill"></div>
+            </div>
+            <div class="seat-info you">
+              <span class="seat-turn-tag">내 차례</span>
+              <span class="seat-name">나</span>
+              <span class="seat-count" id="count-0">7</span>
+            </div>
+          </div>
+          <div class="hand-player" id="hand-0"></div>
+          <div class="player-actions">
+            <button type="button" id="btn-onecard" class="btn-onecard hidden" disabled>원카드!</button>
+            <button type="button" id="btn-draw" class="btn-action" disabled>카드 받기</button>
+            <button type="button" id="btn-pass" class="btn-action hidden" disabled>패스</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="color-modal" class="modal hidden" role="dialog" aria-labelledby="color-title">
+      <div class="modal-panel color-panel">
+        <h2 id="color-title">색 선택</h2>
+        <div class="color-choices">
+          <button type="button" class="color-btn color-red" data-color="red" aria-label="빨강"></button>
+          <button type="button" class="color-btn color-blue" data-color="blue" aria-label="파랑"></button>
+          <button type="button" class="color-btn color-yellow" data-color="yellow" aria-label="노랑"></button>
+          <button type="button" class="color-btn color-green" data-color="green" aria-label="초록"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="result-modal" class="modal hidden" role="dialog">
+      <div class="modal-panel result-panel">
+        <p class="result-brand">ONE CARD</p>
+        <h2 id="result-title">최종 순위</h2>
+        <ol id="result-ranking" class="result-ranking"></ol>
+        <p id="result-sub"></p>
+        <button type="button" id="btn-again" class="btn-primary">한 판 더</button>
+      </div>
+    </div>
+  </div>
+  <script src="js/game.js"></script>
+</body>
+</html>
