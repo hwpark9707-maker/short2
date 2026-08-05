@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#07080F" />
+    <title>Neon Alley DJ — Short Player</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;700&family=Sora:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="player-shell">
+      <div class="stage" id="stage" role="application" aria-label="숏폼 플레이어">
+        <img
+          class="media"
+          src="neoncat.jpg"
+          alt="Neon cat DJ on a rainy cyberpunk rooftop"
+          draggable="false"
+        />
+
+        <div class="scrim-top" aria-hidden="true"></div>
+        <div class="scrim-bottom" aria-hidden="true"></div>
+
+        <header class="title-bar">
+          <div class="title-copy">
+            <p class="brand">NEON ALLEY</p>
+            <h1 class="title">Neon Alley DJ</h1>
+            <p class="subtitle">cyber night set</p>
+          </div>
+          <button
+            class="menu-btn"
+            type="button"
+            aria-label="더보기"
+            data-action="menu"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <circle cx="12" cy="5" r="1.8" fill="currentColor" />
+              <circle cx="12" cy="12" r="1.8" fill="currentColor" />
+              <circle cx="12" cy="19" r="1.8" fill="currentColor" />
+            </svg>
+          </button>
+        </header>
+
+        <nav class="action-rail" aria-label="interactions">
+          <button class="action" type="button" data-action="like" aria-pressed="false">
+            <span class="action-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path
+                  class="heart-path"
+                  d="M12 20.5s-7.2-4.35-9.3-8.55C1.2 9.2 2.4 6 5.55 6c1.8 0 3.15 1.05 3.9 2.25C10.2 7.05 11.55 6 13.35 6c3.15 0 4.35 3.2 2.85 5.95C16.1 16.15 12 20.5 12 20.5z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span class="action-count" data-like-count>11.2만</span>
+          </button>
+
+          <button class="action" type="button" data-action="comment">
+            <span class="action-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path
+                  d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 19 16.5h-5.2L9 20v-3.5H5A1.5 1.5 0 0 1 3.5 15V7A1.5 1.5 0 0 1 5 5.5z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span class="action-count" data-comment-count>3187</span>
+          </button>
+
+          <button class="action" type="button" data-action="share">
+            <span class="action-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path
+                  d="M12 4.5v9.5M8.5 8 12 4.5 15.5 8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M6 13.5v4A1.5 1.5 0 0 0 7.5 19h9a1.5 1.5 0 0 0 1.5-1.5v-4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </span>
+            <span class="action-count">2640</span>
+          </button>
+
+          <button
+            class="action music-disc-btn"
+            type="button"
+            data-action="toggle-audio"
+            aria-label="음악 재생/일시정지"
+            aria-pressed="false"
+          >
+            <span class="music-disc" aria-hidden="true">
+              <img src="neoncat.jpg" alt="" />
+            </span>
+          </button>
+        </nav>
+
+        <footer class="meta-bar">
+          <div class="profile-row">
+            <img class="avatar" src="neoncat.jpg" alt="" />
+            <span class="username">@neoncat_dj</span>
+            <button class="follow" type="button" aria-pressed="false">
+              Follow
+            </button>
+          </div>
+          <p class="caption">
+            Rainy rooftop set — ears up. Neon nights only.
+          </p>
+          <div class="music-row">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path
+                d="M9 18.5a2.5 2.5 0 1 1-2-2.45V7.8l10-2.3v9.55a2.5 2.5 0 1 1-2-2.45V8.4l-6 1.38v8.72z"
+                fill="currentColor"
+              />
+            </svg>
+            <div class="music-marquee">
+              <span class="music-title"
+                >Original Sound — neoncat_dj · music.mp3 · cyber night set</span
+              >
+            </div>
+          </div>
+        </footer>
+
+        <button
+          class="tap-layer"
+          type="button"
+          aria-label="탭하여 재생/일시정지"
+          data-action="toggle-audio"
+        ></button>
+
+        <div class="play-hint" id="playHint" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="36" height="36" aria-hidden="true">
+            <path d="M8 5.5v13l11-6.5L8 5.5z" fill="currentColor" />
+          </svg>
+        </div>
+
+        <div class="heart-burst-layer" id="heartBurst" aria-hidden="true"></div>
+
+        <div
+          class="comment-sheet"
+          id="commentSheet"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="commentSheetTitle"
+          hidden
+        >
+          <button
+            class="comment-backdrop"
+            type="button"
+            data-action="close-comments"
+            aria-label="댓글 닫기"
+          ></button>
+          <div class="comment-panel">
+            <div class="comment-handle" aria-hidden="true"></div>
+            <header class="comment-header">
+              <h2 id="commentSheetTitle">댓글 <span data-comment-count>3187</span></h2>
+              <button
+                class="comment-close"
+                type="button"
+                data-action="close-comments"
+                aria-label="닫기"
+              >
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                  <path
+                    d="M6 6l12 12M18 6L6 18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+            </header>
+            <ul class="comment-list" id="commentList"></ul>
+            <form class="comment-composer" id="commentForm">
+              <img class="composer-avatar" src="neoncat.jpg" alt="" />
+              <label class="sr-only" for="commentInput">댓글 작성</label>
+              <input
+                id="commentInput"
+                class="comment-input"
+                type="text"
+                maxlength="200"
+                placeholder="댓글 추가..."
+                autocomplete="off"
+              />
+              <button class="comment-submit" type="submit" disabled>게시</button>
+            </form>
+          </div>
+        </div>
+
+        <audio id="audio" src="music.mp3" preload="metadata" loop></audio>
+      </div>
+    </div>
+
+    <script src="player.js"></script>
+  </body>
+</html>
